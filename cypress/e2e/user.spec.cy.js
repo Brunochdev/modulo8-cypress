@@ -14,7 +14,8 @@ const selectorsList = { //primeira parte da automação até chegar no "My Info"
 
 const selectorMyInfo = { //Dados utilizados para preenchimento de cadastro do usuário
   genericField: '.oxd-input-field-bottom-space',
-  genericCalendar: ':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-date-wrapper > .oxd-date-input > .oxd-input',
+  genericCalendar: '.bi-calendar',
+  genericComboboxSelector: ".oxd-select-text",
   eraseField: '{selectall}{backspace}',
   firstNameField: "[name='firstName']",
   middleNameField: "[name='middleName']",
@@ -32,13 +33,22 @@ describe('Orange HRM Tests', () => {
     //cy.location('pathname').should('equal', '/web/index.php/dashboard/index') //pathname aqui se refere ao caminho depois da url principal -> passa parâmetro "deve ser igual a" 
     cy.get('.oxd-topbar-header-breadcrumb-module').contains('Dashboard') //funciona pensando do mesmo modo da linha de cima, ele está fazendo uma verificação para ver se existe - no caso a palavra "Dashboard"
     cy.get(selectorsList.myInfoButton).click()//poderia usar o cy.visit, mas não simula o modo como um usuário utiliza o serviço -> cy.visit('/pim/viewPersonalDetails/empNumber/7')
-    cy.get(selectorMyInfo.firstNameField).clear().type(userData.dataMyInfo.firstName)
+    cy.get(selectorMyInfo.firstNameField).type(selectorMyInfo.eraseField).type(userData.dataMyInfo.firstName)
     cy.get(selectorMyInfo.middleNameField).clear().type(userData.dataMyInfo.middleName)
     cy.get(selectorMyInfo.lastNameField).clear().type(userData.dataMyInfo.lastName)
     cy.get(selectorMyInfo.genericField).eq(3).type(selectorMyInfo.eraseField).type(userData.dataMyInfo.employeeId)
     cy.get(selectorMyInfo.genericField).eq(4).clear().type(userData.dataMyInfo.otherId)
     cy.get(selectorMyInfo.genericField).eq(5).type(selectorMyInfo.eraseField).type(userData.dataMyInfo.driverLicense)
-    cy.get(selectorMyInfo.genericCalendar).eq(0).click().type(selectorMyInfo.eraseField).type('1990-10-10').click()
+    cy.get(selectorMyInfo.genericCalendar).eq(0).click({force:true}).type(selectorMyInfo.eraseField).type('1990-10-10')
+    cy.get('.--close')
+    cy.get(selectorMyInfo.genericComboboxSelector).eq(0).click({force:true})
+    cy.get(':nth-child(27) > span').should('contain', 'Brazilian').click()
+    cy.get(selectorMyInfo.genericComboboxSelector).eq(1).click({force:true})
+    cy.get('.oxd-select-dropdown > :nth-child(3)').click()
+    cy.get(selectorMyInfo.genericCalendar).eq(1).click({force:true}).type(selectorMyInfo.eraseField).type('2028-10-10')
+    cy.get('.--close')
+
+
     cy.get(selectorMyInfo.saveButton).eq(1).click()
     cy.get('body').should('contain', 'Successfully Saved')
   })

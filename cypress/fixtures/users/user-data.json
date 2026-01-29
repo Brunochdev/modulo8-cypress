@@ -6,5 +6,16 @@
 
   "userFail": {
     "failField": "test"
+  },
+
+  "dataMyInfo": {
+    "firstName": "Bruno",
+    "middleName": "Lucio",
+    "lastName": "Chagas",
+    "employeeId": "123456789",
+    "otherId": "987654321",
+    "driverLicense": "111222333"
   }
+
+
 }

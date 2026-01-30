@@ -2,6 +2,7 @@
 //Pular teste: it.skip... -> it.skip('Login - Success'......
 //Executar somente um dos testes: it.only... -> it.only('Login - Success'......
 //Algumas observações: Eu não fiz o melhor modo em alguns lugares do código, mas foi justamente pensando que existe mais de uma maneira de se fazer as coisas
+//Nesse projeto foi utilizado a biblioteca "chance" -> npm install chance
 
 import userData from '../fixtures/users/user-data.json' //esses dados ficam separados para tornar o código mais limpo, então fica na pasta fixtures
 import LoginPage from '../pages/loginPage.js'
@@ -9,10 +10,15 @@ import DashboardPage from '../pages/dashboardPage.js'
 import MenuPage from '../pages/menuPage.js'
 import MyInfoPage from '../pages/myinfoPage.js'
 
+const Chance = require('chance')
+
+const chance = new Chance()
 const loginPage = new LoginPage()
 const dashboardPage = new DashboardPage()
 const menuPage = new MenuPage()
 const myinfoPage = new MyInfoPage()
+
+
 
 const selectorMyInfo = { //Dados utilizados para preenchimento de cadastro do usuário
   genericField: '.oxd-input-field-bottom-space',
@@ -39,7 +45,7 @@ describe('Orange HRM Tests', () => {
     menuPage.clickMyInfo()
     // cy.get(selectorsList.myInfoButton).click()//poderia usar o cy.visit, mas não simula o modo como um usuário utiliza o serviço -> cy.visit('/pim/viewPersonalDetails/empNumber/7')
 
-    myinfoPage.fillPersonalDetails(userData.dataMyInfo.firstName, userData.dataMyInfo.middleName, userData.dataMyInfo.lastName)
+    myinfoPage.fillPersonalDetails(chance.first(), userData.dataMyInfo.middleName, 'Chagas') //aqui foi pra aprender a usar uma biblioteca externa (chance) para inserção de dados, usando um dado de uma pasta e mais um dado inserido diretamente no código
     // cy.get(selectorMyInfo.firstNameField).type(selectorMyInfo.eraseField).type(userData.dataMyInfo.firstName)
     // cy.get(selectorMyInfo.middleNameField).clear().type(userData.dataMyInfo.middleName)
     // cy.get(selectorMyInfo.lastNameField).clear().type(userData.dataMyInfo.lastName)

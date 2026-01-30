@@ -30,7 +30,7 @@ const selectorMyInfo = { //Dados utilizados para preenchimento de cadastro do us
 }
 
 describe('Orange HRM Tests', () => {
-  it.only('User Info Update - Success', () => {
+  it('User Info Update - Success', () => {
     loginPage.accessLogin()
     loginPage.loginSuccess(userData.userSuccess.name, userData.userSuccess.password)
     // cy.visit('/auth/login')

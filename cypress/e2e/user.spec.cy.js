@@ -7,19 +7,18 @@ import userData from '../fixtures/users/user-data.json' //esses dados ficam sepa
 import LoginPage from '../pages/loginPage.js'
 import DashboardPage from '../pages/dashboardPage.js'
 import MenuPage from '../pages/menuPage.js'
+import MyInfoPage from '../pages/myinfoPage.js'
 
 const loginPage = new LoginPage()
 const dashboardPage = new DashboardPage()
 const menuPage = new MenuPage()
+const myinfoPage = new MyInfoPage()
 
 const selectorMyInfo = { //Dados utilizados para preenchimento de cadastro do usuário
   genericField: '.oxd-input-field-bottom-space',
   genericCalendar: '.bi-calendar',
   genericComboboxSelector: ".oxd-select-text",
   eraseField: '{selectall}{backspace}',
-  firstNameField: "[name='firstName']",
-  middleNameField: "[name='middleName']",
-  lastNameField: "[name='lastName']",
   saveButton: ".oxd-button--secondary",
   saveConfirmation: "#oxd-toaster_1",
 }
@@ -39,9 +38,13 @@ describe('Orange HRM Tests', () => {
 
     menuPage.clickMyInfo()
     // cy.get(selectorsList.myInfoButton).click()//poderia usar o cy.visit, mas não simula o modo como um usuário utiliza o serviço -> cy.visit('/pim/viewPersonalDetails/empNumber/7')
+
+    myinfoPage.fillPersonalDetails(userData.dataMyInfo.firstName, userData.dataMyInfo.middleName, userData.dataMyInfo.lastName)
     // cy.get(selectorMyInfo.firstNameField).type(selectorMyInfo.eraseField).type(userData.dataMyInfo.firstName)
     // cy.get(selectorMyInfo.middleNameField).clear().type(userData.dataMyInfo.middleName)
     // cy.get(selectorMyInfo.lastNameField).clear().type(userData.dataMyInfo.lastName)
+
+    myinfoPage.fillEmployeeDetails(userData.dataMyInfo.employeeId, userData.dataMyInfo.otherId, userData.dataMyInfo.driverLicense, userData.dataMyInfo.expiryDate, userData.dataMyInfo.birthDate)
     // cy.get(selectorMyInfo.genericField).eq(3).type(selectorMyInfo.eraseField).type(userData.dataMyInfo.employeeId)
     // cy.get(selectorMyInfo.genericField).eq(4).clear().type(userData.dataMyInfo.otherId)
     // cy.get(selectorMyInfo.genericField).eq(5).type(selectorMyInfo.eraseField).type(userData.dataMyInfo.driverLicense)
@@ -54,6 +57,8 @@ describe('Orange HRM Tests', () => {
     // cy.get(selectorMyInfo.genericCalendar).eq(1).click({force:true}).type(selectorMyInfo.eraseField).type('2028-10-10')
     // cy.get('.--close')
     // cy.get(selectorMyInfo.saveButton).eq(1).click()
+
+    myinfoPage.saveForm()
     // cy.get('body').should('contain', 'Successfully Saved')
     // //deixando esse final um pouco "mais feio" para ter ideia de como fica mais complicado fazer a manutenção de um código sem organização
   })

@@ -14,8 +14,9 @@
     "lastName": "Chagas",
     "employeeId": "123456789",
     "otherId": "987654321",
-    "driverLicense": "111222333"
+    "driverLicense": "111222333",
+    "birthDate": "2000-10-10",
+    "expiryDate": "2028-10-10"
   }
-
 
 }
